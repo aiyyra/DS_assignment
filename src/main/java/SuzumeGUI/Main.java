@@ -54,7 +54,9 @@ public class Main {
 	} 
         else if(floor.isGetTTT()){
             floor.setGetTTT(false);
-            TTTnormalbot tictactoe = new TTTnormalbot();
+            TTT5x5 ttt5x5 = new TTT5x5();
+//            TTTReverse reverse = new TTTReverse();
+//            TTTnormalbot tictactoe = new TTTnormalbot();
 //            TTT.setVisible(true);
 //            frame.add(TTT);
          
