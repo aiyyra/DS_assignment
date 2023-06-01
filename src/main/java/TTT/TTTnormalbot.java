@@ -20,20 +20,13 @@ public class TTTnormalbot extends TTTnormal{
     Font normfont = new Font("MV Boli",Font.BOLD,120);
     int counter =0;
 
-    @Override
-    public void set5x5() {
-        super.set5x5(); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-
     enum Difficulty {
         EASY, MEDIUM, HARD
     }
     
     public TTTnormalbot() {
         super();
-        difficulty=Difficulty.HARD;
+        difficulty=Difficulty.EASY;
     }
     
     @Override
@@ -50,8 +43,10 @@ public class TTTnormalbot extends TTTnormal{
             setButtons(true);
         }
         else{
+//            setButtons(false);
+            
             BotMove();
-            textField.setText("O turn");
+//            textField.setText("O turn");
         }
     }
     
@@ -63,79 +58,65 @@ public class TTTnormalbot extends TTTnormal{
                     buttons[i].setForeground(new Color(255,0,0));
                     buttons[i].setText("X");
                     counter++;
-                    
-                    player1_turn=false;
-                    textField.setText("O turn");
+                    if(checkDraw()){
+                        Draw();
+                        break;
+                    }
                     check();
                     if(checkXwin())break;
-                    if(checkDraw()){
-                        Draw();
-                        break;
-                    }
+                    player1_turn=false;
+                    textField.setText("O turn");
+                   
                     BotMove();
-                    if(checkOwin())break;
                     if(checkDraw()){
                         Draw();
                         break;
                     }
+                    if(checkOwin())break;
+                    player1_turn=true;
+                    textField.setText("X turn");
                 }
             }
         }
     }
     
     public void BotMove(){
+        setButtons(false);
         counter++;
-        if (this.difficulty == Difficulty.EASY)BotMoveEasy();
-        else if (this.difficulty == Difficulty.HARD)BotMoveHard();
-        else{
-            BotMoveMedium();
-        }
+        int move;
+        if (this.difficulty == Difficulty.EASY)move = BotMoveEasy();
+        else if (this.difficulty == Difficulty.HARD)move = BotMoveHard();
+        else move = BotMoveMedium();
+        
+        buttons[move].setForeground(new Color(0,0,255));
+        buttons[move].setText("O");
+        
+        
+        setButtons(true);
+        check();
 
     }
     
-    public void BotMoveEasy(){
+    public int BotMoveEasy(){
         int move;
-        setButtons(false);
+        
         do{
              move = rand.nextInt(0,tiles);
         }while (buttons[move].getText()!="");
         
-        buttons[move].setForeground(new Color(0,0,255));
-        buttons[move].setText("O");
-        player1_turn=true;
-        textField.setText("X turn");
-        setButtons(true);
-        check();
+        return move;
     }
     
-    public void BotMoveMedium(){
-        int move;
-        setButtons(false);
-        
-        move = makeOptimumMove1();
-        
-        buttons[move].setForeground(new Color(0,0,255));
-        buttons[move].setText("O");
-        player1_turn=true;
-        textField.setText("X turn");
-        setButtons(true);
-        check();
+    public int BotMoveMedium(){
+        return makeOptimumMove1();
     }
     
-    public void BotMoveHard(){
-        int move;
-        setButtons(false);
-        
-        move = makeOptimumMove2(); 
+    public int BotMoveHard(){
+        int move = makeOptimumMove2(); 
         if(move < 0 ){
             move = makeOptimumMove1();
         }
-        buttons[move].setForeground(new Color(0,0,255));
-        buttons[move].setText("O");
-        player1_turn=true;
-        textField.setText("X turn");
-        setButtons(true);
-        check();
+        return move;
     }
     
 
@@ -144,7 +125,7 @@ public class TTTnormalbot extends TTTnormal{
         for(int i =0;i<tiles;i++){
             if(buttons[i].getText()==""){
                 buttons[i].setFont(tryfont);
-                buttons[i].setText("O");
+                buttons[i].setText("finding");
                 if(checkOwin()){
                     buttons[i].setText("");
                     buttons[i].setFont(normfont);
@@ -166,7 +147,7 @@ public class TTTnormalbot extends TTTnormal{
         for(int i =0;i<tiles;i++){
             if(buttons[i].getText()==""){
                 buttons[i].setFont(tryfont);
-                buttons[i].setText("X");
+                buttons[i].setText("trying 2");
                 if(checkXwin()){
                     buttons[i].setText("");
                     buttons[i].setFont(normfont);

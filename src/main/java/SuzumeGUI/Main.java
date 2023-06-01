@@ -8,7 +8,7 @@ import Map.FinalMap;
 import TTT.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import java.util.Arrays;
+import java.util.Random;
 import page.Exit;
 /**
  *
@@ -19,21 +19,23 @@ public class Main {
     private static final int TIME_STEP = 30;
     private static Timer clockTimer = null;
     
+    
     public static void main(String[] args) {
-        startGame();
+        startGame(1);
     }
     
-    public static void startGame() {
+    public static void startGame(int difficulty) {
 	SuzumeFloor floor = new SuzumeFloor(map.getFin());
 	SuzumeFrame frame = new SuzumeFrame("Suzume", floor);
 	frame.setLocationRelativeTo(null);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	floor.addFloorListener(frame.getSuzumeComponent());
+        
 
 	Action doOneStep = new AbstractAction()
 	{
 	    public void actionPerformed(ActionEvent e) {
-		tick(frame, floor);
+		tick(frame, floor,difficulty);
 	    }
 	};
 	clockTimer = new Timer(TIME_STEP, doOneStep);
@@ -48,13 +50,19 @@ public class Main {
         launch.setVisible(true);
     }
 
-    private static void tick(SuzumeFrame frame, SuzumeFloor floor) {
+    private static void tick(SuzumeFrame frame, SuzumeFloor floor,int difficulty) {
 	if (floor.getIsGameOver()) {
 	    gameOver(frame, floor);
 	} 
         else if(floor.isGetTTT()){
             floor.setGetTTT(false);
-            TTT5x5 ttt5x5 = new TTT5x5();
+            
+            int temp = new Random().nextInt(3);
+            if(temp ==0) new TTT5x5(difficulty);
+            else if (temp==1)new TTTtreble(13);
+            else new TTTReverse();
+//            new TTTtreble(13);
+//            TTT5x5 ttt5x5 = new TTT5x5(difficulty);
 //            TTTReverse reverse = new TTTReverse();
 //            TTTnormalbot tictactoe = new TTTnormalbot();
 //            TTT.setVisible(true);
