@@ -331,10 +331,10 @@ public void actionPerformed(ActionEvent e) {
                         playerScore++;
                         scoreBoard++; // Increment the score
                         playerScoreLabel.setText("Player: " + playerScore);
-                        resetGame();
+//                        resetGame();
                     } else if (isBoardFull()) {
                         JOptionPane.showMessageDialog(TTT5x5.this, "It's a draw!");
-                        resetGame();
+//                        resetGame();
                     } else {
                         // Opponent's turn
                         if (difficulty ==1) {
@@ -348,10 +348,10 @@ public void actionPerformed(ActionEvent e) {
                             JOptionPane.showMessageDialog(TTT5x5.this, "Opponent wins!");
                             opponentScore++;
                             opponentScoreLabel.setText("Opponent: " + opponentScore);
-                            resetGame();
+//                            resetGame();
                         } else if (isBoardFull()) {
                             JOptionPane.showMessageDialog(TTT5x5.this, "It's a draw!");
-                            resetGame();
+//                            resetGame();
                         }
                     }
                     return;
