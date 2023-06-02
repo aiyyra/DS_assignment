@@ -65,6 +65,8 @@ public class TTT5x5 extends JFrame implements ActionListener {
 
     
     public TTT5x5() {
+        this.setSize(400, 400);
+        this.
         gameBoard = new char[BOARD_SIZE][BOARD_SIZE];
         initializeGameBoard();
         playerScore = 0;

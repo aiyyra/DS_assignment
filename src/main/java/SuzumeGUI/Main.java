@@ -9,6 +9,7 @@ import TTT.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.util.Random;
+import javax.sound.sampled.ReverbType;
 import page.Exit;
 /**
  *
@@ -60,7 +61,16 @@ public class Main {
             int temp = new Random().nextInt(3);
             if(temp ==0) new TTT5x5(difficulty);
             else if (temp==1)new TTTtreble(13);
-            else new TTTReverse();
+            else {
+                SwingUtilities.invokeLater(() -> {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                ex.printStackTrace();
+            }
+            ReversedTTT game = new ReversedTTT(3);
+        });
+            }
 //            new TTTtreble(13);
 //            TTT5x5 ttt5x5 = new TTT5x5(difficulty);
 //            TTTReverse reverse = new TTTReverse();
