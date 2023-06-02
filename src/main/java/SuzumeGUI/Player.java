@@ -1,8 +1,6 @@
 package SuzumeGUI;
 
 //import TicTacToe.NewJFrame;
-import TTT.NewJFrame;
-import TTT.NewJPanel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import page.Exit;
